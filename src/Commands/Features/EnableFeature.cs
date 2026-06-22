@@ -1,6 +1,7 @@
 ﻿using System.Management.Automation;
 using System;
 using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.FeaturesCSOM;
 
 namespace PnP.PowerShell.Commands.Features
 {
@@ -20,16 +21,25 @@ namespace PnP.PowerShell.Commands.Features
 
         protected override void ExecuteCmdlet()
         {
-            var pnpContext = Connection.PnPContext;
-            if (Scope == FeatureScope.Web)
+            try
             {
-                pnpContext.Web.LoadAsync(w => w.Features).GetAwaiter().GetResult();
-                pnpContext.Web.Features.EnableAsync(Identity).GetAwaiter().GetResult();
+                var pnpContext = Connection.PnPContext;
+                if (Scope == FeatureScope.Web)
+                {
+                    pnpContext.Web.LoadAsync(w => w.Features).GetAwaiter().GetResult();
+                    pnpContext.Web.Features.EnableAsync(Identity).GetAwaiter().GetResult();
+                }
+                else
+                {
+                    pnpContext.Site.LoadAsync(s => s.Features).GetAwaiter().GetResult();
+                    pnpContext.Site.Features.EnableAsync(Identity).GetAwaiter().GetResult();
+                }
             }
-            else
+            catch(Exception ex)
             {
-                pnpContext.Site.LoadAsync(s => s.Features).GetAwaiter().GetResult();
-                pnpContext.Site.Features.EnableAsync(Identity).GetAwaiter().GetResult();
+                WriteError(new ErrorRecord(ex, "EnableFeatureFailed. Trying alternate method using CSOM", ErrorCategory.InvalidOperation, null));
+                EnableFeatureCSOM enableFeatureCSOM = new EnableFeatureCSOM(Identity, Scope);
+
             }
         }
     }
