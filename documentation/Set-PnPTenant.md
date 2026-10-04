@@ -144,7 +144,9 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-IncludeAtAGlanceInShareEmails <Boolean>]
  [-MassDeleteNotificationDisabled <Boolean>]
  [-BusinessConnectivityServiceDisabled <Boolean>]
+ [-EnableSensitivityLabelForOneNote <Boolean>]
  [-EnableSensitivityLabelForPDF <Boolean>]
+ [-EnableSensitivityLabelForVideoFiles <Boolean>]
  [-IsDataAccessInCardDesignerEnabled <Boolean>]
  [-CoreSharingCapability <SharingCapabilities>]
  [-BlockUserInfoVisibilityInOneDrive <TenantBrowseUserInfoPolicyValue>]
@@ -186,6 +188,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EnableMediaReactions <Boolean>]
  [-ResyncContentSecurityPolicyConfigurationEntries]
  [-ContentSecurityPolicyEnforcement <Boolean>]
+ [-CopilotSearchOptIn <Boolean>]
  [-DisableSpacesActivation <Boolean>]
  [-CoreOrganizationSharingLinkRecommendedExpirationInDays <int>] 
  [-CoreOrganizationSharingLinkMaxExpirationInDays <int>]
@@ -268,6 +271,13 @@ Set-PnPTenant -ResyncContentSecurityPolicyConfigurationEntries
 ```
 
 This example requests a resync of Content Security Policy trusted script sources for SharePoint Framework solutions in the tenant app catalog and reads back whether the resync request is still pending.
+
+### EXAMPLE 10
+```powershell
+Set-PnPTenant -CopilotSearchOptIn $true
+```
+
+This example opts the tenant in to Copilot Search.
 
 ## PARAMETERS
 
@@ -448,6 +458,24 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EnableSensitivityLabelForOneNote
+Allows turning on support for sensitivity labels on OneNote files in SharePoint and OneDrive.
+
+The valid values are:
+True - Enables support for labeled OneNote files.
+False (default) - Disables support for labeled OneNote files.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -EnableSensitivityLabelForPDF
 Allows turning on support for PDFs with sensitivity labels for the following scenarios:
 
@@ -459,6 +487,24 @@ Allows turning on support for PDFs with sensitivity labels for the following sce
 The valid values are:
 True - Enables support for PDFs.
 False (default) - Disables support for PDFs.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableSensitivityLabelForVideoFiles
+Allows turning on support for sensitivity labels on video files in SharePoint and OneDrive.
+
+The valid values are:
+True - Enables support for labeled video files.
+False (default) - Disables support for labeled video files.
 
 ```yaml
 Type: Boolean
@@ -505,6 +551,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CopilotSearchOptIn
+Specifies whether the tenant is opted in to Copilot Search.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False

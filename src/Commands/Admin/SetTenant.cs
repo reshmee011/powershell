@@ -433,7 +433,13 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? BusinessConnectivityServiceDisabled { get; set; }
 
         [Parameter(Mandatory = false)]
+        public bool? EnableSensitivityLabelForOneNote { get; set; }
+
+        [Parameter(Mandatory = false)]
         public bool? EnableSensitivityLabelForPDF { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? EnableSensitivityLabelForVideoFiles { get; set; }
 
         [Parameter(Mandatory = false)]
         public bool? IsDataAccessInCardDesignerEnabled { get; set; }
@@ -578,6 +584,9 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public bool? ContentSecurityPolicyEnforcement { set; get; }
+
+        [Parameter(Mandatory = false)]
+        public bool? CopilotSearchOptIn { set; get; }
 
         [Parameter(Mandatory = false)]
         public bool? DisableSpacesActivation { set; get; }
@@ -1587,9 +1596,21 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
+            if (EnableSensitivityLabelForOneNote.HasValue)
+            {
+                Tenant.EnableSensitivityLabelForOneNote = EnableSensitivityLabelForOneNote.Value;
+                modified = true;
+            }
+
             if (EnableSensitivityLabelForPDF.HasValue)
             {
                 Tenant.EnableSensitivityLabelForPDF = EnableSensitivityLabelForPDF.Value;
+                modified = true;
+            }
+
+            if (EnableSensitivityLabelForVideoFiles.HasValue)
+            {
+                Tenant.EnableSensitivityLabelForVideoFiles = EnableSensitivityLabelForVideoFiles.Value;
                 modified = true;
             }
 
@@ -1808,6 +1829,11 @@ namespace PnP.PowerShell.Commands.Admin
             if (ContentSecurityPolicyEnforcement.HasValue)
             {
                 Tenant.ContentSecurityPolicyEnforcement = ContentSecurityPolicyEnforcement.Value;
+                modified = true;
+            }
+            if (CopilotSearchOptIn.HasValue)
+            {
+                Tenant.CopilotSearchOptIn = CopilotSearchOptIn.Value;
                 modified = true;
             }
             if (DisableSpacesActivation.HasValue)
